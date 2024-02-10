@@ -1,0 +1,74 @@
+<body>
+
+  <div class="container mb-5">
+
+    <h1 class="text-center my-3">To-Do List App</h1>
+
+    <div class="card text-bg-dark mt-3">
+
+      <div class="row mt-3">
+
+        <div *ngIf="!editMode" class="col">
+          <h2 class="text-center">Create new task</h2>
+        </div>
+
+        <div *ngIf="editMode" class="col">
+          <h2 class="text-center">Edit task</h2>
+        </div>
+
+      </div>
+
+      <div class="row m-3">
+
+        <div class="col-md-6">
+          <input class="form-control" [(ngModel)]="newAppointmentTitle" placeholder="Task description">
+        </div>
+
+        <div *ngIf="!editMode" class="col-md-4">
+          <input class="form-control" [(ngModel)]="newAppointmentDate" type="date" placeholder="Task due date">
+        </div>
+
+        <div *ngIf="editMode" class="col-md-3">
+          <input class="form-control" [(ngModel)]="newAppointmentDate" type="date" placeholder="Task due date">
+        </div>
+
+        <div *ngIf="!editMode" class="col-md-2">
+          <button class="btn btn-primary w-100" (click)="addAppointment()">Add</button>
+        </div>
+
+        <div *ngIf="editMode" class="col-md-1">
+          <button class="btn btn-primary w-100" (click)="persistEdit()">Edit</button>
+        </div>
+
+        <div *ngIf="editMode" class="col-md-2">
+          <button class="btn btn-primary w-100" (click)="undoEdit()">Undo Edit</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <h2 *ngIf="appointments.length" class="text-center mt-4">Tasks</h2>
+
+    <ol class="list-group list-group-numbered mt-3">
+      <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" *ngFor="let appointment of appointments; index as i">
+
+        <div class="ms-2 me-auto">
+          <div class="fw-bold" style="font-size: 1.5rem;">{{appointment.title}}</div>
+          Complete by {{appointment.date | date:'dd.MM.yyyy'}}
+        </div>
+
+        <span *ngIf="appointment.completed" class="badge bg-success rounded-pill me-4" style="font-size: medium;">COMPLETED</span>
+
+        <button *ngIf="!appointment.completed" class="btn btn-info me-3" (click)="markAsDone(i)">Mark as Done</button>
+
+        <button class="btn btn-secondary me-3" (click)="editAppointment(i)">Edit</button>
+    
+        <button class="btn btn-danger" (click)="deleteAppointment(i)">Delete</button>
+      </li>
+    </ol>
+
+  </div>
+
+</body>
+
